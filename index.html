@@ -1,635 +1,100 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0b2d52">
-<title>RESPOND - Emergency Rescue System</title>
+<!-- RESPOND WELCOME PAGE -->
+<section id="respondWelcome">
+
+  <div class="welcome-alert">
+    <div class="alert-icon">🚨</div>
+  </div>
+
+  <h1>HEY RESCUERS,</h1>
+
+  <h2>Welcome to the App!</h2>
+
+  <p>Respond: Your trusted companion.</p>
+
+  <button onclick="enterRespondApp()">
+    GET STARTED →
+  </button>
+
+</section>
 
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-}
-
-body {
-  background: #eef4fa;
-  color: #17324d;
-}
-
-button {
-  cursor: pointer;
-  border: none;
-  font-weight: bold;
-}
-
-.hidden {
-  display: none !important;
-}
-
-/* WELCOME PAGE */
-#welcome {
+#respondWelcome {
   min-height: 100vh;
-  background: linear-gradient(145deg, #061b35, #07518a, #1685bd);
-  color: white;
+  background: #fffdf5;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 30px;
+  padding: 30px 20px;
+  color: #252525;
 }
 
-.logo {
-  width: 110px;
-  height: 110px;
-  border: 3px solid white;
-  border-radius: 28px;
+#respondWelcome .welcome-alert {
+  width: 150px;
+  height: 150px;
+  background: #fff0e9;
+  border: 3px solid #ffcc70;
+  border-radius: 35px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 38px;
-  font-weight: bold;
-  margin-bottom: 25px;
-  background: rgba(255,255,255,0.12);
+  margin-bottom: 35px;
 }
 
-#welcome h1 {
-  font-size: 38px;
-  letter-spacing: 4px;
-  margin-bottom: 12px;
+#respondWelcome .alert-icon {
+  font-size: 90px;
 }
 
-#welcome h2 {
-  font-size: 19px;
-  margin-bottom: 12px;
-}
-
-#welcome p {
-  max-width: 340px;
-  line-height: 1.6;
-  color: #d9eaff;
-  margin-bottom: 30px;
-}
-
-.primary-btn {
-  background: #ffb52e;
-  color: #12304d;
-  padding: 15px 35px;
-  border-radius: 30px;
-  font-size: 15px;
-  transition: 0.2s;
-}
-
-.primary-btn:hover {
-  background: #ffd078;
-  transform: translateY(-2px);
-}
-
-/* DASHBOARD */
-#app {
-  min-height: 100vh;
-}
-
-header {
-  background: #0b2d52;
-  color: white;
-  padding: 20px;
-}
-
-.header-content {
-  max-width: 1050px;
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-}
-
-header h1 {
-  letter-spacing: 2px;
-  font-size: 25px;
-}
-
-header p {
-  color: #bcd8f1;
-  font-size: 12px;
-  margin-top: 5px;
-}
-
-main {
-  max-width: 1050px;
-  margin: auto;
-  padding: 22px 16px;
-}
-
-.section-title {
-  font-size: 21px;
-  margin-bottom: 16px;
-}
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-bottom: 25px;
-}
-
-.stat-card {
-  background: white;
-  border-radius: 14px;
-  padding: 18px 10px;
-  box-shadow: 0 3px 12px #17324d12;
-  text-align: center;
-}
-
-.stat-card h2 {
-  font-size: 28px;
-  margin-bottom: 5px;
-}
-
-.stat-card p {
-  font-size: 12px;
-  color: #61758a;
-}
-
-.red-text {
-  color: #e53935;
-}
-
-.green-text {
-  color: #159b62;
-}
-
-.blue-text {
-  color: #1475b9;
-}
-
-.panel {
-  background: white;
-  border-radius: 14px;
-  padding: 18px;
+#respondWelcome h1 {
+  font-size: clamp(30px, 8vw, 44px);
+  font-weight: 900;
+  color: #e32636;
   margin-bottom: 20px;
-  box-shadow: 0 3px 12px #17324d12;
 }
 
-.victim-list {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+#respondWelcome h2 {
+  font-size: clamp(25px, 6vw, 36px);
+  font-weight: 800;
+  margin-bottom: 18px;
 }
 
-.victim {
-  border: 1px solid #e1e9f0;
-  border-radius: 12px;
-  padding: 14px;
+#respondWelcome p {
+  font-size: clamp(19px, 4.5vw, 24px);
+  font-weight: 600;
+  color: #9b710d;
+  margin-bottom: 38px;
 }
 
-.victim-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 5px;
-  margin-bottom: 10px;
+#respondWelcome button {
+  background: #ffcf52;
+  color: #252525;
+  font-size: 19px;
+  font-weight: 800;
+  padding: 19px 38px;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 5px 0 #d9a82e;
+  cursor: pointer;
 }
 
-.victim h3 {
-  font-size: 15px;
-}
-
-.status {
-  font-size: 10px;
-  padding: 6px 9px;
-  border-radius: 20px;
-  color: white;
-  font-weight: bold;
-}
-
-.status.red {
-  background: #e53935;
-}
-
-.status.green {
-  background: #159b62;
-}
-
-.victim p {
-  font-size: 12px;
-  color: #65798d;
-  margin-bottom: 12px;
-}
-
-.rescue-btn {
-  width: 100%;
-  padding: 10px;
-  border-radius: 8px;
-  background: #e8f1fa;
-  color: #14558a;
-  font-size: 12px;
-}
-
-.rescue-btn:disabled {
-  background: #e0f4e9;
-  color: #159b62;
-  cursor: default;
-}
-
-.action-btn {
-  background: #1269a8;
-  color: white;
-  padding: 12px 16px;
-  border-radius: 8px;
-  margin: 5px 5px 5px 0;
-  font-size: 13px;
-}
-
-.action-btn.orange {
-  background: #ed941d;
-}
-
-.action-btn:hover {
-  opacity: 0.85;
-}
-
-.location-box {
-  background: #f0f6fc;
-  padding: 13px;
-  border-radius: 9px;
-  margin-top: 12px;
-  font-size: 13px;
-  line-height: 1.6;
-  overflow-wrap: anywhere;
-}
-
-#notificationArea {
-  margin-top: 12px;
-  font-size: 13px;
-  line-height: 1.7;
-}
-
-.notification {
-  background: #fff6e6;
-  border-left: 4px solid #f1a62c;
-  padding: 11px;
-  border-radius: 6px;
-  margin-top: 8px;
-}
-
-footer {
-  text-align: center;
-  color: #8293a4;
-  font-size: 11px;
-  padding: 25px 10px;
-}
-
-@media (max-width: 600px) {
-  .victim-list {
-    grid-template-columns: 1fr;
-  }
-
-  .stats {
-    gap: 7px;
-  }
-
-  .stat-card {
-    padding: 15px 5px;
-  }
-
-  .stat-card h2 {
-    font-size: 23px;
-  }
-
-  .stat-card p {
-    font-size: 10px;
-  }
-
-  header h1 {
-    font-size: 21px;
-  }
+#respondWelcome button:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #d9a82e;
 }
 </style>
-</head>
-
-<body>
-
-<!-- WELCOME PAGE -->
-<section id="welcome">
-  <div class="logo">R</div>
-
-  <h1>RESPOND</h1>
-  <h2>Welcome to RESPOND</h2>
-
-  <p>
-    Rapid Emergency Support and Disaster Operations Network.
-    Supporting faster and more organised flood rescue operations.
-  </p>
-
-  <button class="primary-btn" onclick="startApp()">
-    GET STARTED →
-  </button>
-
-  <p style="margin-top:35px;font-size:11px;margin-bottom:0;">
-    YOUR SAFETY MATTERS. EVERY SECOND COUNTS.
-  </p>
-</section>
-
-<!-- MAIN APP -->
-<div id="app" class="hidden">
-
-  <header>
-    <div class="header-content">
-      <div>
-        <h1>RESPOND</h1>
-        <p>Emergency Rescue Management System</p>
-      </div>
-      <div style="font-size:25px;">🛟</div>
-    </div>
-  </header>
-
-  <main>
-
-    <h2 class="section-title">Rescue Dashboard</h2>
-
-    <!-- STATISTICS -->
-    <div class="stats">
-      <div class="stat-card">
-        <h2 id="totalCount" class="blue-text">10</h2>
-        <p>Total Victims</p>
-      </div>
-
-      <div class="stat-card">
-        <h2 id="pendingCount" class="red-text">10</h2>
-        <p>Awaiting Rescue</p>
-      </div>
-
-      <div class="stat-card">
-        <h2 id="rescuedCount" class="green-text">0</h2>
-        <p>Rescued</p>
-      </div>
-    </div>
-
-    <!-- VICTIMS -->
-    <section class="panel">
-      <h2 class="section-title">Victims Status</h2>
-      <p style="font-size:12px;color:#65798d;margin-bottom:15px;">
-        Red = Not Rescued &nbsp; | &nbsp; Green = Rescued
-      </p>
-
-      <div class="victim-list" id="victimList"></div>
-    </section>
-
-    <!-- GPS -->
-    <section class="panel">
-      <h2 class="section-title">GPS Location Tracking</h2>
-      <p style="font-size:13px;color:#65798d;line-height:1.6;">
-        Get the current location of this device.
-      </p>
-
-      <button class="action-btn" onclick="getLocation()">
-        📍 Locate My Device
-      </button>
-
-      <div class="location-box" id="locationResult">
-        Location not detected yet.
-      </div>
-    </section>
-
-    <!-- RESCUE TEAM -->
-    <section class="panel">
-      <h2 class="section-title">Rescue Team Dashboard</h2>
-      <p style="font-size:13px;color:#65798d;line-height:1.6;">
-        Monitor victim rescue progress and update the rescue status.
-      </p>
-
-      <div class="location-box" id="teamProgress">
-        Rescue progress: 0 / 10 victims rescued.
-      </div>
-    </section>
-
-    <!-- NOTIFICATIONS -->
-    <section class="panel">
-      <h2 class="section-title">Emergency Notifications</h2>
-
-      <p style="font-size:13px;color:#65798d;line-height:1.6;">
-        Receive browser notifications when a rescue status is updated.
-      </p>
-
-      <button class="action-btn orange" onclick="enableNotifications()">
-        🔔 Enable Notifications
-      </button>
-
-      <div id="notificationArea">
-        No new notifications.
-      </div>
-    </section>
-
-    <footer>
-      RESPOND Emergency Rescue System<br>
-      Demonstration Version
-    </footer>
-
-  </main>
-</div>
 
 <script>
+function enterRespondApp() {
+  document.getElementById("respondWelcome").style.display = "none";
 
-// APP NAVIGATION
-function startApp() {
-  document.getElementById("welcome").classList.add("hidden");
-  document.getElementById("app").classList.remove("hidden");
-  window.scrollTo(0, 0);
-}
+  // Show your original RESPOND dashboard
+  const dashboard = document.getElementById("app");
 
-// VICTIM DATA
-const victims = [];
-
-for (let i = 1; i <= 10; i++) {
-  victims.push({
-    id: i,
-    rescued: false
-  });
-}
-
-// RESTORE DEMO STATUS
-try {
-  const saved = localStorage.getItem("respondVictims");
-  if (saved) {
-    const data = JSON.parse(saved);
-    victims.forEach(v => {
-      const old = data.find(item => item.id === v.id);
-      if (old) v.rescued = old.rescued === true;
-    });
-  }
-} catch (e) {
-  console.log("Using default victim data.");
-}
-
-// DISPLAY VICTIMS
-function renderVictims() {
-  const list = document.getElementById("victimList");
-  list.innerHTML = "";
-
-  victims.forEach(victim => {
-    const rescued = victim.rescued;
-
-    const card = document.createElement("div");
-    card.className = "victim";
-
-    const top = document.createElement("div");
-    top.className = "victim-top";
-
-    const heading = document.createElement("h3");
-    heading.textContent = "Victim " + victim.id;
-
-    const status = document.createElement("span");
-    status.className = "status " + (rescued ? "green" : "red");
-    status.textContent = rescued ? "RESCUED" : "PENDING";
-
-    top.appendChild(heading);
-    top.appendChild(status);
-
-    const description = document.createElement("p");
-    description.textContent = rescued
-      ? "Rescue completed."
-      : "Waiting for rescue assistance.";
-
-    const button = document.createElement("button");
-    button.className = "rescue-btn";
-    button.textContent = rescued ? "✓ Rescued" : "Mark as Rescued";
-    button.disabled = rescued;
-
-    button.onclick = () => markRescued(victim.id);
-
-    card.appendChild(top);
-    card.appendChild(description);
-    card.appendChild(button);
-
-    list.appendChild(card);
-  });
-
-  updateStatistics();
-}
-
-// UPDATE STATUS
-function markRescued(id) {
-  const victim = victims.find(v => v.id === id);
-
-  if (!victim || victim.rescued) return;
-
-  victim.rescued = true;
-
-  try {
-    localStorage.setItem("respondVictims", JSON.stringify(victims));
-  } catch (e) {
-    console.log("Unable to save status.");
-  }
-
-  renderVictims();
-
-  addNotification("Victim " + id + " has been marked as rescued.");
-
-  sendBrowserNotification("RESPOND Update", "Victim " + id + " rescued.");
-}
-
-// UPDATE DASHBOARD
-function updateStatistics() {
-  const rescued = victims.filter(v => v.rescued).length;
-  const pending = victims.length - rescued;
-
-  document.getElementById("totalCount").textContent = victims.length;
-  document.getElementById("pendingCount").textContent = pending;
-  document.getElementById("rescuedCount").textContent = rescued;
-
-  document.getElementById("teamProgress").textContent =
-    "Rescue progress: " + rescued + " / " + victims.length +
-    " victims rescued.";
-}
-
-// GPS LOCATION
-function getLocation() {
-  const result = document.getElementById("locationResult");
-
-  if (!navigator.geolocation) {
-    result.textContent = "GPS is not supported by this browser.";
-    return;
-  }
-
-  result.textContent = "Detecting device location...";
-
-  navigator.geolocation.getCurrentPosition(
-    position => {
-      const lat = position.coords.latitude;
-      const lon = position.coords.longitude;
-
-      result.innerHTML =
-        "Latitude: " + lat.toFixed(6) +
-        "<br>Longitude: " + lon.toFixed(6) +
-        "<br><a target='_blank' rel='noopener' href='https://www.google.com/maps?q=" +
-        lat + "," + lon + "'>View on Google Maps</a>";
-    },
-    error => {
-      result.textContent =
-        "Unable to get location. Please allow location permission and try again.";
-    },
-    {
-      enableHighAccuracy: true,
-      timeout: 15000
-    }
-  );
-}
-
-// BROWSER NOTIFICATIONS
-async function enableNotifications() {
-  if (!("Notification" in window)) {
-    addNotification("Browser notifications are not supported.");
-    return;
-  }
-
-  const permission = await Notification.requestPermission();
-
-  if (permission === "granted") {
-    addNotification("Browser notifications enabled.");
-    sendBrowserNotification(
-      "RESPOND",
-      "Emergency notifications are enabled."
-    );
-  } else {
-    addNotification("Notification permission was not granted.");
+  if (dashboard) {
+    dashboard.classList.remove("hidden");
+    dashboard.style.display = "block";
   }
 }
-
-function sendBrowserNotification(title, message) {
-  if ("Notification" in window &&
-      Notification.permission === "granted") {
-    new Notification(title, {
-      body: message
-    });
-  }
-}
-
-// NOTIFICATION HISTORY
-function addNotification(message) {
-  const area = document.getElementById("notificationArea");
-
-  if (area.textContent === "No new notifications.") {
-    area.textContent = "";
-  }
-
-  const item = document.createElement("div");
-  item.className = "notification";
-
-  const time = new Date().toLocaleTimeString();
-
-  item.textContent = time + " — " + message;
-  area.prepend(item);
-}
-
-// INITIALISE
-renderVictims();
-
 </script>
-</body>
-</html>
