@@ -1,24 +1,30 @@
 
-<!-- RESPOND WELCOME PAGE -->
-<section id="respondWelcome">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#fffdf5">
+<title>RESPOND | Flood Rescue System</title>
 
-  <div class="welcome-alert">
-    <div class="alert-icon">🚨</div>
-  </div>
-
-  <h1>HEY RESCUERS,</h1>
-
-  <h2>Welcome to the App!</h2>
-
-  <p>Respond: Your trusted companion.</p>
-
-  <button onclick="enterRespondApp()">
-    GET STARTED →
-  </button>
-
-</section>
+<link rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
 <style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #eef3f8;
+  color: #17324d;
+}
+
+/* WELCOME PAGE */
+
 #respondWelcome {
   min-height: 100vh;
   background: #fffdf5;
@@ -31,43 +37,45 @@
   color: #252525;
 }
 
-#respondWelcome .welcome-alert {
-  width: 150px;
-  height: 150px;
+.welcome-alert {
+  width: 165px;
+  height: 165px;
   background: #fff0e9;
-  border: 3px solid #ffcc70;
-  border-radius: 35px;
+  border: 4px solid #ffcc70;
+  border-radius: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 35px;
+  box-shadow: 0 8px 22px #e3263615;
 }
 
-#respondWelcome .alert-icon {
-  font-size: 90px;
+.alert-icon {
+  font-size: 100px;
 }
 
 #respondWelcome h1 {
-  font-size: clamp(30px, 8vw, 44px);
+  font-size: clamp(32px, 8vw, 46px);
   font-weight: 900;
   color: #e32636;
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 
 #respondWelcome h2 {
-  font-size: clamp(25px, 6vw, 36px);
+  font-size: clamp(27px, 6vw, 37px);
   font-weight: 800;
   margin-bottom: 18px;
 }
 
 #respondWelcome p {
-  font-size: clamp(19px, 4.5vw, 24px);
+  font-size: clamp(19px, 4.5vw, 25px);
   font-weight: 600;
   color: #9b710d;
-  margin-bottom: 38px;
+  margin-bottom: 40px;
+  line-height: 1.5;
 }
 
-#respondWelcome button {
+.welcome-button {
   background: #ffcf52;
   color: #252525;
   font-size: 19px;
@@ -79,22 +87,615 @@
   cursor: pointer;
 }
 
-#respondWelcome button:active {
+.welcome-button:active {
   transform: translateY(3px);
   box-shadow: 0 2px 0 #d9a82e;
 }
-</style>
 
-<script>
-function enterRespondApp() {
-  document.getElementById("respondWelcome").style.display = "none";
+/* MAIN DASHBOARD */
 
-  // Show your original RESPOND dashboard
-  const dashboard = document.getElementById("app");
+#app {
+  display: none;
+  min-height: 100vh;
+}
 
-  if (dashboard) {
-    dashboard.classList.remove("hidden");
-    dashboard.style.display = "block";
+header {
+  background: #102b49;
+  color: white;
+  padding: 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+header h1 {
+  letter-spacing: 3px;
+  font-size: 27px;
+}
+
+header p {
+  color: #b9cee2;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.live {
+  background: #176c50;
+  padding: 9px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.container {
+  max-width: 1150px;
+  margin: auto;
+  padding: 22px;
+}
+
+h2.section-heading {
+  font-size: 19px;
+  margin: 25px 0 15px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.stat {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  border-left: 5px solid #2678b7;
+}
+
+.stat p {
+  color: #718096;
+  font-size: 13px;
+}
+
+.stat h3 {
+  font-size: 30px;
+  margin-top: 9px;
+}
+
+.red { color: #d93636; }
+.green { color: #16834c; }
+
+.panel {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 3px 12px #0000000a;
+}
+
+#map {
+  height: 350px;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.legend {
+  display: flex;
+  gap: 20px;
+  margin-top: 13px;
+  font-size: 13px;
+  flex-wrap: wrap;
+}
+
+.dot {
+  display: inline-block;
+  height: 11px;
+  width: 11px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.victims {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.victim {
+  border: 1px solid #e1e8ef;
+  padding: 14px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.victim small {
+  display: block;
+  color: #718096;
+  margin-top: 5px;
+  overflow-wrap: anywhere;
+}
+
+.status {
+  display: inline-block;
+  padding: 7px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.pending {
+  background: #ffe2e2;
+  color: #bd2525;
+}
+
+.rescued {
+  background: #d9f5e5;
+  color: #167a43;
+}
+
+button {
+  border: 0;
+  padding: 9px 12px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+.rescue-btn {
+  background: #e3effb;
+  color: #17558b;
+}
+
+.gps-btn {
+  background: #176caa;
+  color: white;
+}
+
+.notification {
+  background: #fff5e5;
+  border-left: 4px solid #ef9d27;
+  padding: 13px;
+  margin-top: 10px;
+  border-radius: 7px;
+  font-size: 13px;
+}
+
+.team-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 13px 0;
+  border-bottom: 1px solid #eee;
+  gap: 10px;
+}
+
+footer {
+  background: #102b49;
+  color: white;
+  padding: 22px;
+  text-align: center;
+  font-size: 12px;
+}
+
+@media(max-width:650px) {
+  .stats {
+    grid-template-columns: repeat(2,1fr);
+  }
+
+  .victims {
+    grid-template-columns: 1fr;
+  }
+
+  #map {
+    height: 280px;
+  }
+
+  .container {
+    padding: 15px;
   }
 }
+</style>
+</head>
+
+<body>
+
+<!-- FIRST PAGE: WELCOME -->
+
+<section id="respondWelcome">
+
+  <div class="welcome-alert">
+    <div class="alert-icon">🚨</div>
+  </div>
+
+  <h1>HEY RESCUERS,</h1>
+
+  <h2>Welcome to the App!</h2>
+
+  <p>Respond: Your trusted companion.</p>
+
+  <button class="welcome-button" onclick="enterRespondApp()">
+    GET STARTED →
+  </button>
+
+</section>
+
+
+<!-- ORIGINAL RESPOND DASHBOARD -->
+
+<div id="app">
+
+<header>
+  <div>
+    <h1>RESPOND</h1>
+    <p>FLOOD RESCUE MANAGEMENT SYSTEM</p>
+  </div>
+  <span class="live">● SYSTEM ONLINE</span>
+</header>
+
+<main class="container">
+
+<h2 class="section-heading">Rescue Overview</h2>
+
+<div class="stats">
+  <div class="stat">
+    <p>Total Victims</p>
+    <h3 id="total">10</h3>
+  </div>
+
+  <div class="stat">
+    <p>Successfully Rescued</p>
+    <h3 class="green" id="rescued">0</h3>
+  </div>
+
+  <div class="stat">
+    <p>Pending Rescue</p>
+    <h3 class="red" id="pending">10</h3>
+  </div>
+
+  <div class="stat">
+    <p>Rescue Teams</p>
+    <h3>1</h3>
+  </div>
+</div>
+
+<h2 class="section-heading">GPS Location Tracking</h2>
+
+<section class="panel">
+  <div id="map"></div>
+
+  <div class="legend">
+    <span><i class="dot" style="background:red"></i>Not Rescued</span>
+    <span><i class="dot" style="background:green"></i>Rescued</span>
+  </div>
+
+  <button class="gps-btn" onclick="locateMe()">
+    Locate My Device
+  </button>
+
+  <p id="gpsMessage" style="font-size:12px;margin-top:8px">
+    Demo victim locations are displayed.
+  </p>
+</section>
+
+<h2 class="section-heading">Victim Management</h2>
+
+<section class="panel">
+  <div class="victims" id="victimList"></div>
+</section>
+
+<h2 class="section-heading">Emergency Notifications</h2>
+
+<section class="panel">
+  <div id="notifications">
+    <div class="notification">RESPOND system is ready.</div>
+  </div>
+
+  <button class="gps-btn" onclick="enableNotifications()">
+    Enable Browser Notifications
+  </button>
+</section>
+
+<h2 class="section-heading">Rescue Team Dashboard</h2>
+
+<section class="panel">
+  <div class="team-row">
+    <strong>Rescue Team 01</strong>
+    <span class="green">● AVAILABLE</span>
+  </div>
+
+  <div class="team-row">
+    <strong>Rescue Progress</strong>
+    <strong id="teamProgress">0 / 10</strong>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  RESPOND | IoT-Based Flood Rescue Management System
+</footer>
+
+</div>
+
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+
+// WELCOME PAGE TO DASHBOARD
+
+let map = null;
+
+function enterRespondApp() {
+  document.getElementById("respondWelcome").style.display = "none";
+  document.getElementById("app").style.display = "block";
+
+  if (!map) {
+    initialiseMap();
+    renderVictims();
+    updateDashboard();
+    updateMap();
+  }
+
+  setTimeout(() => {
+    map.invalidateSize();
+  }, 200);
+}
+
+
+// VICTIM DATA
+
+const victims = [
+ {id:1,lat:2.031,lng:103.317,rescued:false},
+ {id:2,lat:2.038,lng:103.325,rescued:false},
+ {id:3,lat:2.025,lng:103.330,rescued:false},
+ {id:4,lat:2.043,lng:103.312,rescued:false},
+ {id:5,lat:2.020,lng:103.315,rescued:false},
+ {id:6,lat:2.034,lng:103.340,rescued:false},
+ {id:7,lat:2.047,lng:103.330,rescued:false},
+ {id:8,lat:2.015,lng:103.335,rescued:false},
+ {id:9,lat:2.028,lng:103.305,rescued:false},
+ {id:10,lat:2.050,lng:103.318,rescued:false}
+];
+
+const markers = {};
+
+
+// INITIALISE MAP AFTER DASHBOARD OPENS
+
+function initialiseMap() {
+  if (typeof L === "undefined") {
+    document.getElementById("gpsMessage").textContent =
+      "Map library could not load. Please check your internet connection.";
+    return;
+  }
+
+  map = L.map("map").setView([2.031,103.317],14);
+
+  L.tileLayer(
+    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    {
+      attribution: "&copy; OpenStreetMap"
+    }
+  ).addTo(map);
+}
+
+
+// UPDATE MAP MARKERS
+
+function updateMap() {
+  if (!map) return;
+
+  victims.forEach(v => {
+
+    if (markers[v.id]) {
+      map.removeLayer(markers[v.id]);
+    }
+
+    const color = v.rescued ? "green" : "red";
+
+    markers[v.id] = L.circleMarker(
+      [v.lat,v.lng],
+      {
+        radius:9,
+        color:color,
+        fillColor:color,
+        fillOpacity:0.85
+      }
+    ).addTo(map);
+
+    markers[v.id].bindPopup(
+      "Victim " + v.id + "<br>" +
+      (v.rescued
+        ? "Successfully Rescued"
+        : "Awaiting Rescue")
+    );
+  });
+}
+
+
+// UPDATE DASHBOARD STATISTICS
+
+function updateDashboard() {
+  const rescued = victims.filter(v => v.rescued).length;
+
+  document.getElementById("total").textContent = victims.length;
+  document.getElementById("rescued").textContent = rescued;
+  document.getElementById("pending").textContent =
+    victims.length - rescued;
+
+  document.getElementById("teamProgress").textContent =
+    rescued + " / 10";
+}
+
+
+// DISPLAY VICTIMS
+
+function renderVictims() {
+  const list = document.getElementById("victimList");
+  list.innerHTML = "";
+
+  victims.forEach(v => {
+
+    const card = document.createElement("div");
+    card.className = "victim";
+
+    const info = document.createElement("div");
+
+    const name = document.createElement("strong");
+    name.textContent = "Victim " + v.id;
+
+    const coordinates = document.createElement("small");
+    coordinates.textContent =
+      "GPS: " + v.lat + ", " + v.lng;
+
+    info.append(name,coordinates);
+
+    const action = document.createElement("div");
+
+    const badge = document.createElement("span");
+    badge.className = "status " +
+      (v.rescued ? "rescued" : "pending");
+
+    badge.textContent = v.rescued
+      ? "RESCUED"
+      : "PENDING";
+
+    const button = document.createElement("button");
+    button.className = "rescue-btn";
+
+    button.textContent = v.rescued
+      ? "Undo"
+      : "Mark Rescued";
+
+    button.onclick = () => toggleRescue(v.id);
+
+    action.append(
+      badge,
+      document.createElement("br"),
+      button
+    );
+
+    card.append(info,action);
+    list.appendChild(card);
+  });
+}
+
+
+// MARK VICTIM AS RESCUED
+
+function toggleRescue(id) {
+  const victim = victims.find(v => v.id === id);
+
+  if (!victim) return;
+
+  victim.rescued = !victim.rescued;
+
+  addNotification(
+    "Victim " + id +
+    (victim.rescued
+      ? " successfully rescued."
+      : " status reset.")
+  );
+
+  renderVictims();
+  updateDashboard();
+  updateMap();
+}
+
+
+// EMERGENCY NOTIFICATIONS
+
+function addNotification(message) {
+  const area = document.getElementById("notifications");
+
+  const item = document.createElement("div");
+  item.className = "notification";
+
+  item.textContent =
+    new Date().toLocaleTimeString() + " - " + message;
+
+  area.prepend(item);
+
+  if (
+    "Notification" in window &&
+    Notification.permission === "granted"
+  ) {
+    new Notification("RESPOND Update", {
+      body: message
+    });
+  }
+}
+
+
+// ENABLE BROWSER NOTIFICATIONS
+
+async function enableNotifications() {
+  if (!("Notification" in window)) {
+    alert("Notifications are not supported by this browser.");
+    return;
+  }
+
+  const permission = await Notification.requestPermission();
+
+  alert(
+    permission === "granted"
+      ? "Notifications enabled!"
+      : "Notification permission not granted."
+  );
+}
+
+
+// GPS LOCATION OF CURRENT DEVICE
+
+function locateMe() {
+  const message = document.getElementById("gpsMessage");
+
+  if (!navigator.geolocation) {
+    message.textContent = "GPS is not supported.";
+    return;
+  }
+
+  message.textContent = "Getting device location...";
+
+  navigator.geolocation.getCurrentPosition(
+
+    position => {
+      const lat = position.coords.latitude;
+      const lng = position.coords.longitude;
+
+      if (map) {
+        map.setView([lat,lng],16);
+
+        L.marker([lat,lng])
+          .addTo(map)
+          .bindPopup("Your device location")
+          .openPopup();
+      }
+
+      message.innerHTML =
+        "Latitude: " + lat.toFixed(5) +
+        "<br>Longitude: " + lng.toFixed(5) +
+        "<br><a target='_blank' rel='noopener' href='https://www.google.com/maps?q=" +
+        lat + "," + lng + "'>View on Google Maps</a>";
+    },
+
+    () => {
+      message.textContent =
+        "Unable to get GPS location. Please check location permission.";
+    },
+
+    {
+      enableHighAccuracy:true,
+      timeout:15000
+    }
+  );
+}
+
 </script>
+
+</body>
+</html>
