@@ -4,8 +4,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RESPOND | Flood Rescue System</title>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<meta name="theme-color" content="#0b2d52">
+<title>RESPOND - Emergency Rescue System</title>
 
 <style>
 * {
@@ -16,429 +16,619 @@
 }
 
 body {
-  background: #eef3f8;
+  background: #eef4fa;
   color: #17324d;
 }
 
-header {
-  background: #102b49;
+button {
+  cursor: pointer;
+  border: none;
+  font-weight: bold;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* WELCOME PAGE */
+#welcome {
+  min-height: 100vh;
+  background: linear-gradient(145deg, #061b35, #07518a, #1685bd);
   color: white;
-  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px;
+}
+
+.logo {
+  width: 110px;
+  height: 110px;
+  border: 3px solid white;
+  border-radius: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 38px;
+  font-weight: bold;
+  margin-bottom: 25px;
+  background: rgba(255,255,255,0.12);
+}
+
+#welcome h1 {
+  font-size: 38px;
+  letter-spacing: 4px;
+  margin-bottom: 12px;
+}
+
+#welcome h2 {
+  font-size: 19px;
+  margin-bottom: 12px;
+}
+
+#welcome p {
+  max-width: 340px;
+  line-height: 1.6;
+  color: #d9eaff;
+  margin-bottom: 30px;
+}
+
+.primary-btn {
+  background: #ffb52e;
+  color: #12304d;
+  padding: 15px 35px;
+  border-radius: 30px;
+  font-size: 15px;
+  transition: 0.2s;
+}
+
+.primary-btn:hover {
+  background: #ffd078;
+  transform: translateY(-2px);
+}
+
+/* DASHBOARD */
+#app {
+  min-height: 100vh;
+}
+
+header {
+  background: #0b2d52;
+  color: white;
+  padding: 20px;
+}
+
+.header-content {
+  max-width: 1050px;
+  margin: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
   gap: 12px;
 }
 
 header h1 {
-  letter-spacing: 3px;
-  font-size: 27px;
+  letter-spacing: 2px;
+  font-size: 25px;
 }
 
 header p {
-  color: #b9cee2;
+  color: #bcd8f1;
   font-size: 12px;
   margin-top: 5px;
 }
 
-.live {
-  background: #176c50;
-  padding: 9px 14px;
-  border-radius: 20px;
-  font-size: 12px;
-}
-
-.container {
-  max-width: 1150px;
+main {
+  max-width: 1050px;
   margin: auto;
-  padding: 22px;
+  padding: 22px 16px;
 }
 
-h2 {
-  font-size: 19px;
-  margin: 25px 0 15px;
+.section-title {
+  font-size: 21px;
+  margin-bottom: 16px;
 }
 
 .stats {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 25px;
 }
 
-.stat {
+.stat-card {
   background: white;
-  padding: 20px;
-  border-radius: 12px;
-  border-left: 5px solid #2678b7;
+  border-radius: 14px;
+  padding: 18px 10px;
+  box-shadow: 0 3px 12px #17324d12;
+  text-align: center;
 }
 
-.stat p {
-  color: #718096;
-  font-size: 13px;
+.stat-card h2 {
+  font-size: 28px;
+  margin-bottom: 5px;
 }
 
-.stat h3 {
-  font-size: 30px;
-  margin-top: 9px;
+.stat-card p {
+  font-size: 12px;
+  color: #61758a;
 }
 
-.red { color: #d93636; }
-.green { color: #16834c; }
+.red-text {
+  color: #e53935;
+}
+
+.green-text {
+  color: #159b62;
+}
+
+.blue-text {
+  color: #1475b9;
+}
 
 .panel {
   background: white;
-  padding: 20px;
-  border-radius: 12px;
+  border-radius: 14px;
+  padding: 18px;
   margin-bottom: 20px;
-  box-shadow: 0 3px 12px #0000000a;
+  box-shadow: 0 3px 12px #17324d12;
 }
 
-#map {
-  height: 350px;
-  border-radius: 10px;
-}
-
-.legend {
-  display: flex;
-  gap: 20px;
-  margin-top: 13px;
-  font-size: 13px;
-}
-
-.dot {
-  display: inline-block;
-  height: 11px;
-  width: 11px;
-  border-radius: 50%;
-  margin-right: 5px;
-}
-
-.victims {
+.victim-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 12px;
 }
 
 .victim {
-  border: 1px solid #e1e8ef;
+  border: 1px solid #e1e9f0;
+  border-radius: 12px;
   padding: 14px;
-  border-radius: 10px;
+}
+
+.victim-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
+  margin-bottom: 10px;
 }
 
-.victim small {
-  display: block;
-  color: #718096;
-  margin-top: 5px;
+.victim h3 {
+  font-size: 15px;
 }
 
 .status {
-  display: inline-block;
-  padding: 7px 10px;
+  font-size: 10px;
+  padding: 6px 9px;
   border-radius: 20px;
-  font-size: 11px;
+  color: white;
   font-weight: bold;
 }
 
-.pending {
-  background: #ffe2e2;
-  color: #bd2525;
+.status.red {
+  background: #e53935;
 }
 
-.rescued {
-  background: #d9f5e5;
-  color: #167a43;
+.status.green {
+  background: #159b62;
 }
 
-button {
-  border: 0;
-  padding: 9px 12px;
-  border-radius: 7px;
-  cursor: pointer;
-  font-weight: bold;
-  margin-top: 8px;
+.victim p {
+  font-size: 12px;
+  color: #65798d;
+  margin-bottom: 12px;
 }
 
 .rescue-btn {
-  background: #e3effb;
-  color: #17558b;
-}
-
-.gps-btn {
-  background: #176caa;
-  color: white;
-}
-
-.notification {
-  background: #fff5e5;
-  border-left: 4px solid #ef9d27;
-  padding: 13px;
-  margin-top: 10px;
-  border-radius: 7px;
-  font-size: 13px;
-}
-
-.team-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 13px 0;
-  border-bottom: 1px solid #eee;
-}
-
-footer {
-  background: #102b49;
-  color: white;
-  padding: 22px;
-  text-align: center;
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  background: #e8f1fa;
+  color: #14558a;
   font-size: 12px;
 }
 
-@media(max-width:650px) {
-  .stats { grid-template-columns: repeat(2,1fr); }
-  .victims { grid-template-columns: 1fr; }
-  #map { height: 280px; }
+.rescue-btn:disabled {
+  background: #e0f4e9;
+  color: #159b62;
+  cursor: default;
+}
+
+.action-btn {
+  background: #1269a8;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin: 5px 5px 5px 0;
+  font-size: 13px;
+}
+
+.action-btn.orange {
+  background: #ed941d;
+}
+
+.action-btn:hover {
+  opacity: 0.85;
+}
+
+.location-box {
+  background: #f0f6fc;
+  padding: 13px;
+  border-radius: 9px;
+  margin-top: 12px;
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+#notificationArea {
+  margin-top: 12px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.notification {
+  background: #fff6e6;
+  border-left: 4px solid #f1a62c;
+  padding: 11px;
+  border-radius: 6px;
+  margin-top: 8px;
+}
+
+footer {
+  text-align: center;
+  color: #8293a4;
+  font-size: 11px;
+  padding: 25px 10px;
+}
+
+@media (max-width: 600px) {
+  .victim-list {
+    grid-template-columns: 1fr;
+  }
+
+  .stats {
+    gap: 7px;
+  }
+
+  .stat-card {
+    padding: 15px 5px;
+  }
+
+  .stat-card h2 {
+    font-size: 23px;
+  }
+
+  .stat-card p {
+    font-size: 10px;
+  }
+
+  header h1 {
+    font-size: 21px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <div>
-    <h1>RESPOND</h1>
-    <p>FLOOD RESCUE MANAGEMENT SYSTEM</p>
-  </div>
-  <span class="live">● SYSTEM ONLINE</span>
-</header>
+<!-- WELCOME PAGE -->
+<section id="welcome">
+  <div class="logo">R</div>
 
-<main class="container">
+  <h1>RESPOND</h1>
+  <h2>Welcome to RESPOND</h2>
 
-<h2>Rescue Overview</h2>
+  <p>
+    Rapid Emergency Support and Disaster Operations Network.
+    Supporting faster and more organised flood rescue operations.
+  </p>
 
-<div class="stats">
-  <div class="stat">
-    <p>Total Victims</p>
-    <h3 id="total">10</h3>
-  </div>
-  <div class="stat">
-    <p>Successfully Rescued</p>
-    <h3 class="green" id="rescued">0</h3>
-  </div>
-  <div class="stat">
-    <p>Pending Rescue</p>
-    <h3 class="red" id="pending">10</h3>
-  </div>
-  <div class="stat">
-    <p>Rescue Teams</p>
-    <h3>1</h3>
-  </div>
-</div>
+  <button class="primary-btn" onclick="startApp()">
+    GET STARTED →
+  </button>
 
-<h2>GPS Location Tracking</h2>
-
-<section class="panel">
-  <div id="map"></div>
-
-  <div class="legend">
-    <span><i class="dot" style="background:red"></i>Not Rescued</span>
-    <span><i class="dot" style="background:green"></i>Rescued</span>
-  </div>
-
-  <button class="gps-btn" onclick="locateMe()">Locate My Device</button>
-  <p id="gpsMessage" style="font-size:12px;margin-top:8px">
-    Demo victim locations are displayed.
+  <p style="margin-top:35px;font-size:11px;margin-bottom:0;">
+    YOUR SAFETY MATTERS. EVERY SECOND COUNTS.
   </p>
 </section>
 
-<h2>Victim Management</h2>
-<section class="panel">
-  <div class="victims" id="victimList"></div>
-</section>
+<!-- MAIN APP -->
+<div id="app" class="hidden">
 
-<h2>Emergency Notifications</h2>
-<section class="panel">
-  <div id="notifications">
-    <div class="notification">RESPOND system is ready.</div>
-  </div>
-  <button class="gps-btn" onclick="enableNotifications()">
-    Enable Browser Notifications
-  </button>
-</section>
+  <header>
+    <div class="header-content">
+      <div>
+        <h1>RESPOND</h1>
+        <p>Emergency Rescue Management System</p>
+      </div>
+      <div style="font-size:25px;">🛟</div>
+    </div>
+  </header>
 
-<h2>Rescue Team Dashboard</h2>
-<section class="panel">
-  <div class="team-row">
-    <strong>Rescue Team 01</strong>
-    <span class="green">● AVAILABLE</span>
-  </div>
-  <div class="team-row">
-    <strong>Rescue Progress</strong>
-    <strong id="teamProgress">0 / 10</strong>
-  </div>
-</section>
+  <main>
 
-</main>
+    <h2 class="section-title">Rescue Dashboard</h2>
 
-<footer>
-  RESPOND | IoT-Based Flood Rescue Management System
-</footer>
+    <!-- STATISTICS -->
+    <div class="stats">
+      <div class="stat-card">
+        <h2 id="totalCount" class="blue-text">10</h2>
+        <p>Total Victims</p>
+      </div>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+      <div class="stat-card">
+        <h2 id="pendingCount" class="red-text">10</h2>
+        <p>Awaiting Rescue</p>
+      </div>
+
+      <div class="stat-card">
+        <h2 id="rescuedCount" class="green-text">0</h2>
+        <p>Rescued</p>
+      </div>
+    </div>
+
+    <!-- VICTIMS -->
+    <section class="panel">
+      <h2 class="section-title">Victims Status</h2>
+      <p style="font-size:12px;color:#65798d;margin-bottom:15px;">
+        Red = Not Rescued &nbsp; | &nbsp; Green = Rescued
+      </p>
+
+      <div class="victim-list" id="victimList"></div>
+    </section>
+
+    <!-- GPS -->
+    <section class="panel">
+      <h2 class="section-title">GPS Location Tracking</h2>
+      <p style="font-size:13px;color:#65798d;line-height:1.6;">
+        Get the current location of this device.
+      </p>
+
+      <button class="action-btn" onclick="getLocation()">
+        📍 Locate My Device
+      </button>
+
+      <div class="location-box" id="locationResult">
+        Location not detected yet.
+      </div>
+    </section>
+
+    <!-- RESCUE TEAM -->
+    <section class="panel">
+      <h2 class="section-title">Rescue Team Dashboard</h2>
+      <p style="font-size:13px;color:#65798d;line-height:1.6;">
+        Monitor victim rescue progress and update the rescue status.
+      </p>
+
+      <div class="location-box" id="teamProgress">
+        Rescue progress: 0 / 10 victims rescued.
+      </div>
+    </section>
+
+    <!-- NOTIFICATIONS -->
+    <section class="panel">
+      <h2 class="section-title">Emergency Notifications</h2>
+
+      <p style="font-size:13px;color:#65798d;line-height:1.6;">
+        Receive browser notifications when a rescue status is updated.
+      </p>
+
+      <button class="action-btn orange" onclick="enableNotifications()">
+        🔔 Enable Notifications
+      </button>
+
+      <div id="notificationArea">
+        No new notifications.
+      </div>
+    </section>
+
+    <footer>
+      RESPOND Emergency Rescue System<br>
+      Demonstration Version
+    </footer>
+
+  </main>
+</div>
 
 <script>
 
-const victims = [
- {id:1,lat:2.031,lng:103.317,rescued:false},
- {id:2,lat:2.038,lng:103.325,rescued:false},
- {id:3,lat:2.025,lng:103.330,rescued:false},
- {id:4,lat:2.043,lng:103.312,rescued:false},
- {id:5,lat:2.020,lng:103.315,rescued:false},
- {id:6,lat:2.034,lng:103.340,rescued:false},
- {id:7,lat:2.047,lng:103.330,rescued:false},
- {id:8,lat:2.015,lng:103.335,rescued:false},
- {id:9,lat:2.028,lng:103.305,rescued:false},
- {id:10,lat:2.050,lng:103.318,rescued:false}
-];
-
-const map = L.map('map').setView([2.031,103.317],14);
-
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
- attribution:'&copy; OpenStreetMap'
-}).addTo(map);
-
-const markers = {};
-
-function updateMap() {
- victims.forEach(v=>{
-  if(markers[v.id]) map.removeLayer(markers[v.id]);
-
-  const color = v.rescued ? 'green' : 'red';
-
-  markers[v.id] = L.circleMarker([v.lat,v.lng],{
-   radius:9,color:color,fillColor:color,fillOpacity:0.85
-  }).addTo(map);
-
-  markers[v.id].bindPopup(
-   'Victim '+v.id+'<br>'+
-   (v.rescued?'Successfully Rescued':'Awaiting Rescue')
-  );
- });
+// APP NAVIGATION
+function startApp() {
+  document.getElementById("welcome").classList.add("hidden");
+  document.getElementById("app").classList.remove("hidden");
+  window.scrollTo(0, 0);
 }
 
-function updateDashboard() {
- const rescued = victims.filter(v=>v.rescued).length;
- document.getElementById('total').textContent=victims.length;
- document.getElementById('rescued').textContent=rescued;
- document.getElementById('pending').textContent=victims.length-rescued;
- document.getElementById('teamProgress').textContent=rescued+' / 10';
+// VICTIM DATA
+const victims = [];
+
+for (let i = 1; i <= 10; i++) {
+  victims.push({
+    id: i,
+    rescued: false
+  });
 }
 
-function renderVictims() {
- const list=document.getElementById('victimList');
- list.innerHTML='';
-
- victims.forEach(v=>{
-  const card=document.createElement('div');
-  card.className='victim';
-
-  const info=document.createElement('div');
-  const name=document.createElement('strong');
-  name.textContent='Victim '+v.id;
-
-  const coordinates=document.createElement('small');
-  coordinates.textContent='GPS: '+v.lat+', '+v.lng;
-
-  info.append(name,coordinates);
-
-  const action=document.createElement('div');
-
-  const badge=document.createElement('span');
-  badge.className='status '+(v.rescued?'rescued':'pending');
-  badge.textContent=v.rescued?'RESCUED':'PENDING';
-
-  const button=document.createElement('button');
-  button.className='rescue-btn';
-  button.textContent=v.rescued?'Undo':'Mark Rescued';
-  button.onclick=()=>toggleRescue(v.id);
-
-  action.append(badge,document.createElement('br'),button);
-  card.append(info,action);
-  list.appendChild(card);
- });
-}
-
-function addNotification(message) {
- const area=document.getElementById('notifications');
- const item=document.createElement('div');
- item.className='notification';
- item.textContent=new Date().toLocaleTimeString()+' - '+message;
- area.prepend(item);
-
- if('Notification' in window &&
- Notification.permission==='granted') {
-  new Notification('RESPOND Update',{body:message});
- }
-}
-
-function toggleRescue(id) {
- const victim=victims.find(v=>v.id===id);
- victim.rescued=!victim.rescued;
-
- addNotification(
-  'Victim '+id+' '+(victim.rescued?'successfully rescued.':'status reset.')
- );
-
- renderVictims();
- updateDashboard();
- updateMap();
-}
-
-async function enableNotifications() {
- if(!('Notification' in window)) {
-  alert('Notifications not supported.');
-  return;
- }
-
- const permission=await Notification.requestPermission();
-
- alert(permission==='granted'?'Notifications enabled!':'Permission not granted.');
-}
-
-function locateMe() {
- const message=document.getElementById('gpsMessage');
-
- if(!navigator.geolocation) {
-  message.textContent='GPS not supported.';
-  return;
- }
-
- message.textContent='Getting device location...';
-
- navigator.geolocation.getCurrentPosition(
-  position=>{
-   const lat=position.coords.latitude;
-   const lng=position.coords.longitude;
-
-   map.setView([lat,lng],16);
-
-   L.marker([lat,lng]).addTo(map)
-    .bindPopup('Your device location').openPopup();
-
-   message.textContent='Location: '+lat.toFixed(5)+', '+lng.toFixed(5);
-  },
-  ()=>{
-   message.textContent='Unable to get GPS location. Check permission.';
+// RESTORE DEMO STATUS
+try {
+  const saved = localStorage.getItem("respondVictims");
+  if (saved) {
+    const data = JSON.parse(saved);
+    victims.forEach(v => {
+      const old = data.find(item => item.id === v.id);
+      if (old) v.rescued = old.rescued === true;
+    });
   }
- );
+} catch (e) {
+  console.log("Using default victim data.");
 }
 
+// DISPLAY VICTIMS
+function renderVictims() {
+  const list = document.getElementById("victimList");
+  list.innerHTML = "";
+
+  victims.forEach(victim => {
+    const rescued = victim.rescued;
+
+    const card = document.createElement("div");
+    card.className = "victim";
+
+    const top = document.createElement("div");
+    top.className = "victim-top";
+
+    const heading = document.createElement("h3");
+    heading.textContent = "Victim " + victim.id;
+
+    const status = document.createElement("span");
+    status.className = "status " + (rescued ? "green" : "red");
+    status.textContent = rescued ? "RESCUED" : "PENDING";
+
+    top.appendChild(heading);
+    top.appendChild(status);
+
+    const description = document.createElement("p");
+    description.textContent = rescued
+      ? "Rescue completed."
+      : "Waiting for rescue assistance.";
+
+    const button = document.createElement("button");
+    button.className = "rescue-btn";
+    button.textContent = rescued ? "✓ Rescued" : "Mark as Rescued";
+    button.disabled = rescued;
+
+    button.onclick = () => markRescued(victim.id);
+
+    card.appendChild(top);
+    card.appendChild(description);
+    card.appendChild(button);
+
+    list.appendChild(card);
+  });
+
+  updateStatistics();
+}
+
+// UPDATE STATUS
+function markRescued(id) {
+  const victim = victims.find(v => v.id === id);
+
+  if (!victim || victim.rescued) return;
+
+  victim.rescued = true;
+
+  try {
+    localStorage.setItem("respondVictims", JSON.stringify(victims));
+  } catch (e) {
+    console.log("Unable to save status.");
+  }
+
+  renderVictims();
+
+  addNotification("Victim " + id + " has been marked as rescued.");
+
+  sendBrowserNotification("RESPOND Update", "Victim " + id + " rescued.");
+}
+
+// UPDATE DASHBOARD
+function updateStatistics() {
+  const rescued = victims.filter(v => v.rescued).length;
+  const pending = victims.length - rescued;
+
+  document.getElementById("totalCount").textContent = victims.length;
+  document.getElementById("pendingCount").textContent = pending;
+  document.getElementById("rescuedCount").textContent = rescued;
+
+  document.getElementById("teamProgress").textContent =
+    "Rescue progress: " + rescued + " / " + victims.length +
+    " victims rescued.";
+}
+
+// GPS LOCATION
+function getLocation() {
+  const result = document.getElementById("locationResult");
+
+  if (!navigator.geolocation) {
+    result.textContent = "GPS is not supported by this browser.";
+    return;
+  }
+
+  result.textContent = "Detecting device location...";
+
+  navigator.geolocation.getCurrentPosition(
+    position => {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+
+      result.innerHTML =
+        "Latitude: " + lat.toFixed(6) +
+        "<br>Longitude: " + lon.toFixed(6) +
+        "<br><a target='_blank' rel='noopener' href='https://www.google.com/maps?q=" +
+        lat + "," + lon + "'>View on Google Maps</a>";
+    },
+    error => {
+      result.textContent =
+        "Unable to get location. Please allow location permission and try again.";
+    },
+    {
+      enableHighAccuracy: true,
+      timeout: 15000
+    }
+  );
+}
+
+// BROWSER NOTIFICATIONS
+async function enableNotifications() {
+  if (!("Notification" in window)) {
+    addNotification("Browser notifications are not supported.");
+    return;
+  }
+
+  const permission = await Notification.requestPermission();
+
+  if (permission === "granted") {
+    addNotification("Browser notifications enabled.");
+    sendBrowserNotification(
+      "RESPOND",
+      "Emergency notifications are enabled."
+    );
+  } else {
+    addNotification("Notification permission was not granted.");
+  }
+}
+
+function sendBrowserNotification(title, message) {
+  if ("Notification" in window &&
+      Notification.permission === "granted") {
+    new Notification(title, {
+      body: message
+    });
+  }
+}
+
+// NOTIFICATION HISTORY
+function addNotification(message) {
+  const area = document.getElementById("notificationArea");
+
+  if (area.textContent === "No new notifications.") {
+    area.textContent = "";
+  }
+
+  const item = document.createElement("div");
+  item.className = "notification";
+
+  const time = new Date().toLocaleTimeString();
+
+  item.textContent = time + " — " + message;
+  area.prepend(item);
+}
+
+// INITIALISE
 renderVictims();
-updateDashboard();
-updateMap();
 
 </script>
 </body>
